@@ -10,6 +10,6 @@ Follow this steps to build CloudCo Cloud Infra.
 aws configure
 ```
 
-1. Create S3 bucket for Terraform backend. Deploy Terraform block "01-S3_Bucket"
+1. Create S3 bucket for Terraform backend. Deploy Terraform block "01-S3_Bucket".
 
-2. 
+2. Create Jenkins server on default VPC, enabling Internet access and attaching needed roles for further steps.
