@@ -1,2 +1,15 @@
-# CloudCo-TF_AWS
-CloudCo company IaC with Terraform
+# CloudCo company IaC with Terraform.
+
+Demo example to build an AWS infraestructure for a company using Terraform.  
+We will deploy a Jenkins server from our local machine in the default VPC and then we will build a new VPC using Jenkins jobs.
+
+Follow this steps to build CloudCo Cloud Infra.
+
+0. Configure local AWS credentials
+```bash
+aws configure
+```
+
+1. Create S3 bucket for Terraform backend. Deploy Terraform block "01-S3_Bucket"
+
+2. 
