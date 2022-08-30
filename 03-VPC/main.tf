@@ -1,9 +1,3 @@
-provider "aws" {
-  region     = "${var.region}"
-  profile = "default" # Credentials are set in Bash Profile
-}
-
-
 # VPC resources: This will create 1 VPC with 6 Subnets, 1 Internet Gateway, 6 Route Tables. 
 resource "aws_vpc" "vpc" {
   cidr_block           = var.cidr_block

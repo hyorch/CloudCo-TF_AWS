@@ -1,3 +1,4 @@
+# ROLE
 resource "aws_iam_role" "jenkins_ec2_role" {
   name               = "jenkins-server_ec2_role"
   assume_role_policy = <<EOF
@@ -21,11 +22,13 @@ EOF
   }
 }
 
+# INSTANCE PROFILE
 resource "aws_iam_instance_profile" "jenkins_ec2_profile" {
   name = "jenkins_ec2_profile"
   role = aws_iam_role.jenkins_ec2_role.name
 }
 
+# POLICIES
 resource "aws_iam_policy" "s3_policy" {
   name        = "s3_policy"
   path        = "/"
@@ -45,6 +48,11 @@ resource "aws_iam_policy" "s3_policy" {
   ]
 }
 EOF
+}
+
+resource "aws_iam_role_policy_attachment" "s3-pol-attach" {
+  role       = aws_iam_role.jenkins_ec2_role.name
+  policy_arn = aws_iam_policy.s3_policy.arn
 }
 
 resource "aws_iam_policy" "ec2_policy" {
@@ -68,6 +76,12 @@ resource "aws_iam_policy" "ec2_policy" {
 EOF
 }
 
+
+resource "aws_iam_role_policy_attachment" "ec2-pol-attach" {
+  role       = aws_iam_role.jenkins_ec2_role.name
+  policy_arn = aws_iam_policy.ec2_policy.arn
+}
+
 resource "aws_iam_policy" "dynamodb_policy" {
   name        = "dynamodb_policy"
   path        = "/"
@@ -84,22 +98,11 @@ resource "aws_iam_policy" "dynamodb_policy" {
         "dynamodb:PutItem",
         "dynamodb:DeleteItem"
       ],
-      "Resource": "arn:aws:dynamodb:*:*:${var.dynamodb-table}"
+      "Resource": "arn:aws:dynamodb:*:*:table/${var.dynamodb-table}"
     }
   ]
 }
 EOF
-}
-
-
-resource "aws_iam_role_policy_attachment" "s3-pol-attach" {
-  role       = aws_iam_role.jenkins_ec2_role.name
-  policy_arn = aws_iam_policy.s3_policy.arn
-}
-
-resource "aws_iam_role_policy_attachment" "ec2-pol-attach" {
-  role       = aws_iam_role.jenkins_ec2_role.name
-  policy_arn = aws_iam_policy.ec2_policy.arn
 }
 
 resource "aws_iam_role_policy_attachment" "dynamodb-pol-attach" {
