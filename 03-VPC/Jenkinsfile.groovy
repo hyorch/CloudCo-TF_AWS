@@ -21,15 +21,17 @@ pipeline {
 
         stage('Init Parameters') {
             steps{
-                switch(ENV_NAME) {
-                    case "dev": 
-                        env_filename = "develop_vars.tfvars"                       
-                        break
-                    default:
-                        env_filename = "no_file.txt"
-                        break
+                script {
+                    switch(params.ENV_NAME) {
+                        case "dev": 
+                            env_filename = "develop_vars.tfvars"                       
+                            break
+                        default:
+                            env_filename = "no_file.txt"
+                            break
+                    }
                 }
-                echo 
+                echo env_filename
             }
         }
 
