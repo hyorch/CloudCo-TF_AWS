@@ -1,7 +1,9 @@
+def tfvars_filename = "no-tfvars.txt"
+
 pipeline {
     agent any
     environment{
-        ENV_FILENAME = ""
+        ENV_FILENAME = "nofile.txt"
     }
     parameters {
 		choice (name: 'ENV_NAME',
@@ -21,17 +23,20 @@ pipeline {
 
         stage('Init Parameters') {
             steps{
+                echo tfvars_filename
                 script {
                     switch(params.ENV_NAME) {
                         case "dev": 
-                            ENV_FILENAME = "develop_vars.tfvars"                       
+                            env.ENV_FILENAME = "develop_vars.tfvars"   
+                            tfvars_filename = "develop_vars.tfvars"     
                             break
                         default:
-                            ENV_FILENAME = "no_file.txt"
+                            env.ENV_FILENAME = "no_file.txt"
                             break
                     }
                 }
-                echo env_filename
+                echo "File: ${ENV_FILENAME} - ${env.ENV_FILENAME}"
+                print(env.ENV_FILENAME)
             }
         }
 
@@ -44,7 +49,9 @@ pipeline {
 
         stage('Terraform Init') {            
             steps {
-                sh 'terraform init -var-file ${env.ENV_FILENAME} -backend-config="key=03-VPC-${ENV_NAME}/terraform.tfstate"'
+                echo 'file: ${ENV_FILENAME}'
+                echo tfvars_filename
+                sh 'terraform init -var-file ${ENV_FILENAME} -backend-config="key=03-VPC-${ENV_NAME}/terraform.tfstate"'
                 echo "End Terraform Init"
             }
         }
@@ -53,7 +60,7 @@ pipeline {
         stage('Terraform Plan') {
             when { anyOf{environment name: 'ACTION', value: 'plan';}}
             steps {
-                sh 'terraform plan -var-file ${env.ENV_FILENAME}'
+                sh 'terraform plan -var-file ${ENV_FILENAME}'
                 echo "End Terraform Plan"
             }
         }
