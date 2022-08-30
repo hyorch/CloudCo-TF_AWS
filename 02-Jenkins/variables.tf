@@ -9,7 +9,7 @@ variable "bucket-name" {
 
 variable "instance_name" {
   description = "Value of the Name tag for the EC2 instance"
-  default     = "Jenkins-Ubuntu"
+  default     = "Jenkins-Ubuntu2004"
 }
 
 variable "instance_type" {

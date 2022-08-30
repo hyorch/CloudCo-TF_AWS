@@ -52,7 +52,7 @@ pipeline {
                 
                 pwd()
                 dir('03-VPC'){
-                    sh "terraform init -var-file ${tfvars_filename} -backend-config='${tfstate_file}'"
+                    sh "terraform init -no-color -var-file ${tfvars_filename} -backend-config='${tfstate_file}'"
                     sh "ls -l"
                 }
                 sh "ls -l"
@@ -70,7 +70,7 @@ pipeline {
             }
             steps {
                 dir('03-VPC'){
-                    sh "terraform plan -var-file ${tfvars_filename}"                    
+                    sh "terraform plan -no-color -var-file ${tfvars_filename}"                    
                 }                
                 echo "**************End Terraform Plan******************************"
             }
@@ -91,7 +91,7 @@ pipeline {
             when { anyOf{environment name: 'ACTION', value: 'apply';}}
             steps {
                 dir('03-VPC'){
-                    sh "terraform apply -var-file ${tfvars_filename} --auto-approve"                    
+                    sh "terraform apply -no-color -var-file ${tfvars_filename} --auto-approve"                    
                 }                
                 echo "**********************End Terraform Plan*********************"
             }
@@ -100,7 +100,7 @@ pipeline {
             when { anyOf{environment name: 'ACTION', value: 'destroy';}}
             steps {
                 dir('03-VPC'){
-                    sh "terraform destroy -var-file ${tfvars_filename} --auto-approve"                    
+                    sh "terraform destroy -no-color -var-file ${tfvars_filename} --auto-approve"                    
                 }                
                 echo "*************End Terraform Destroy**************"
             }

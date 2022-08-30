@@ -4,5 +4,6 @@ terraform {
     bucket = "cloudco-demo-tf-state"
     key    = "02-Jenkins/terraform.tfstate"
     region = "eu-west-1"
+    dynamodb_table = "terraform-locks"
   }
 }
