@@ -15,4 +15,6 @@ aws configure
 2. Create Jenkins server on default VPC, enabling Internet access and attaching needed roles for further steps.  
 Check Terraform and AWS Cli using demos jobs in "02-Jenkins\Jobs" folder. For this demo, we will run Jenkins jobs using the server as agent.
 
-3. 
+3. Run Jenkins job to Create and modify VPC. 
+    - Create a job from SCM Git repo. (As this is a demo, we will use just one branch, main, for all evironments. No credentials are required)
+    
