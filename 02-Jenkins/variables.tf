@@ -37,3 +37,7 @@ variable "ssh_port" {
   description = "SSH port"
   default     = 22
 }
+
+variable "dynamodb-table" {
+  default = "terraform-locks"  
+}

@@ -9,3 +9,7 @@ variable "bucket-name" {
 variable "bucket-encryption" {
   default = "AES256"
 }
+
+variable "dynamodb-table" {
+  default = "terraform-locks"  
+}

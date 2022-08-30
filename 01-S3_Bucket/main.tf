@@ -25,7 +25,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "aes256_encryption
 
 # DynamoDB to controll locks 
 resource "aws_dynamodb_table" "terraform-locks" {
-  name     = "terraform-locks"
+  name     = var.dynamodb-table
   hash_key = "LockID"
   billing_mode = "PAY_PER_REQUEST"
   attribute {
