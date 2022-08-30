@@ -76,6 +76,21 @@ pipeline {
             }
         }
 
+        stage('Terraform Plan-Destroy') {
+            when { 
+                anyOf{
+                    environment name: 'ACTION', value: 'destroy';                 
+                }
+            }
+            steps {
+                dir('03-VPC'){
+                    sh "terraform plan -destroy -no-color -var-file ${tfvars_filename}"                    
+                }                
+                echo "**************End Terraform Plan Destroy******************************"
+            }
+        }
+
+
         stage('Approval') {
             when { 
                 anyOf{
@@ -84,7 +99,7 @@ pipeline {
                 }
             }
             steps {
-                input(id:'confirm',message: 'Click "proceed" to show Terraform Version')
+                input(id:'confirm',message: 'Click "proceed" to execute Terraform operation')
             }
         }
         stage('Terraform Apply') {
