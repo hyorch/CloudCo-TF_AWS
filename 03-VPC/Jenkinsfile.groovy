@@ -53,6 +53,7 @@ pipeline {
                 pwd()
                 dir('03-VPC'){
                     sh "terraform init -var-file ${tfvars_filename} -backend-config='${tfstate_file}'"
+                    sh "ls -l"
                 }
                 echo "End Terraform Init"
             }
@@ -64,6 +65,7 @@ pipeline {
             steps {
                 dir('03-VPC'){
                     sh "terraform plan -var-file ${tfvars_filename}"
+                    sh "ls -l"
                 }
                 echo "End Terraform Plan"
             }
