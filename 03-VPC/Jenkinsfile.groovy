@@ -55,19 +55,24 @@ pipeline {
                     sh "terraform init -var-file ${tfvars_filename} -backend-config='${tfstate_file}'"
                     sh "ls -l"
                 }
+                sh "ls -l"
                 echo "End Terraform Init"
             }
         }
 
         
         stage('Terraform Plan') {
-            when { anyOf{environment name: 'ACTION', value: 'plan';}}
+            when { 
+                anyOf{
+                    environment name: 'ACTION', value: 'plan';
+                    environment name: 'ACTION', value: 'apply';
+                }
+            }
             steps {
                 dir('03-VPC'){
-                    sh "terraform plan -var-file ${tfvars_filename}"
-                    sh "ls -l"
-                }
-                echo "End Terraform Plan"
+                    sh "terraform plan -var-file ${tfvars_filename}"                    
+                }                
+                echo "**************End Terraform Plan******************************"
             }
         }
 
@@ -80,6 +85,24 @@ pipeline {
             }
             steps {
                 input(id:'confirm',message: 'Click "proceed" to show Terraform Version')
+            }
+        }
+        stage('Terraform Apply') {
+            when { anyOf{environment name: 'ACTION', value: 'apply';}}
+            steps {
+                dir('03-VPC'){
+                    sh "terraform apply -var-file ${tfvars_filename} --auto-approve"                    
+                }                
+                echo "**********************End Terraform Plan*********************"
+            }
+        }
+        stage('Terraform Destroy') {
+            when { anyOf{environment name: 'ACTION', value: 'destroy';}}
+            steps {
+                dir('03-VPC'){
+                    sh "terraform destroy -var-file ${tfvars_filename} --auto-approve"                    
+                }                
+                echo "*************End Terraform Destroy**************"
             }
         }
 
