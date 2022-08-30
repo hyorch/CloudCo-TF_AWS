@@ -44,7 +44,7 @@ pipeline {
 
         stage('Terraform Init') {            
             steps {
-                //sh 'terraform init -'
+                sh 'terraform init -var-file ${env_filename} -backend-config="key=${params.ENV_NAME}/terraform.tfstate"'
                 echo "End Terraform Init"
             }
         }
@@ -53,7 +53,7 @@ pipeline {
         stage('Terraform Plan') {
             when { anyOf{environment name: 'ACTION', value: 'plan';}}
             steps {
-                //sh 'terraform plan '
+                sh 'terraform plan -var-file ${env_filename}'
                 echo "End Terraform Plan"
             }
         }
