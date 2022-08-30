@@ -2,9 +2,7 @@ def tfvars_filename = "no-tfvars.txt"
 
 pipeline {
     agent any
-    environment{
-        ENV_FILENAME = "nofile.txt"
-    }
+    
     parameters {
 		choice (name: 'ENV_NAME',
 				choices: ['dev','qa','preprod','prod'],
@@ -22,21 +20,19 @@ pipeline {
     stages {
 
         stage('Init Parameters') {
-            steps{
-                echo tfvars_filename
+            steps{                
                 script {
                     switch(params.ENV_NAME) {
-                        case "dev": 
-                            env.ENV_FILENAME = "develop_vars.tfvars"   
+                        case "dev":                               
                             tfvars_filename = "develop_vars.tfvars"     
                             break
                         default:
-                            env.ENV_FILENAME = "no_file.txt"
+                            tfvars_filename = "no_file.txt"
                             break
                     }
                 }
-                echo "File: ${ENV_FILENAME} - ${env.ENV_FILENAME}"
-                print(env.ENV_FILENAME)
+                echo "File: ${tfvars_filename}"
+                
             }
         }
 
@@ -49,8 +45,9 @@ pipeline {
 
         stage('Terraform Init') {            
             steps {
-                echo 'file: ${ENV_FILENAME}'
+                echo 'file: ${tfvars_filename}'
                 echo tfvars_filename
+                pwd()
                 sh 'terraform init -var-file ${ENV_FILENAME} -backend-config="key=03-VPC-${ENV_NAME}/terraform.tfstate"'
                 echo "End Terraform Init"
             }
