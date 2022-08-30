@@ -17,4 +17,8 @@ Check Terraform and AWS Cli using demos jobs in "02-Jenkins\Jobs" folder. For th
 
 3. Run Jenkins job to Create and modify VPC. 
     - Create a job from SCM Git repo. (As this is a demo, we will use just one branch, main, for all evironments. No credentials are required)
+        - Script Path: 03-VPC/Jenkinsfile.groovy
+        - Branch: */main
+        - Repository: https://github.com/hyorch/CloudCo-TF_AWS
+
     

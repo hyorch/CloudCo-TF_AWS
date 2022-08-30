@@ -12,3 +12,4 @@ To customize S3 folder for environment
 terraform init -var-file ireland_vars.tfvars -backend-config="key=folder/terraform.tfstate"
 ```
 
+terraform apply --auto-approve
