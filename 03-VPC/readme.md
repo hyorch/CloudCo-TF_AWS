@@ -1,10 +1,4 @@
-# VPC
-Create a full VPC
-
-## 01 S3 Bucket
-S3 Bucket to store state
-
-## 02 VPC
+# VARS AND BACKEND
 Run Terraform pointing to a configuration tfvars file.
 
 ```bash
