@@ -3,17 +3,6 @@ provider "aws" {
   profile = "default" # Credentials are set in Bash Profile
 }
 
-# Use S3 backend
-terraform {
-  backend "s3" {
-    # Replace this with your bucket data
-    bucket         = "terraform-state-hyorch-vpc"   
-    key            = "vpc_ireland_s3backend/terraform.tfstate"
-    # Make dynamic folder using
-    # terraform init -var-file ireland_vars.tfvars -backend-config="key=folder_name/terraform.tfstate"
-    region         = "eu-west-1"
-  }
-}
 
 # VPC resources: This will create 1 VPC with 6 Subnets, 1 Internet Gateway, 6 Route Tables. 
 resource "aws_vpc" "vpc" {
