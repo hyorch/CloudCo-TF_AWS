@@ -12,7 +12,8 @@ resource "aws_instance" "Jenkins" {
 }
 
 # RUN Manually On-Demand
-# terraform plan -target="null_resource.jenkins_installer"
+# terraform taint null_resource.jenkins_installer
+# terraform apply -target="null_resource.jenkins_installer"
 resource "null_resource" "jenkins_installer" {
   triggers = {
     #No triggers to automatic re-install, just execute on first deploy or on-demand.
