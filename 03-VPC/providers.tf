@@ -1,5 +1,4 @@
-
 provider "aws" {
   profile = "default" # Default local config
-  region  = var.aws-region
+  region  = var.region
 }
