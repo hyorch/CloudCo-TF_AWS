@@ -1,5 +1,6 @@
-def tfvars_filename = "no-tfvars.txt"
-def tfstate_file = "no-tfstate.txt"
+def destinantion_vpc_id = ""
+def tfstate_file = "nofile.txt"
+def tfvars_filename = "nofile.txt"
 
 pipeline {
     agent any
@@ -23,21 +24,24 @@ pipeline {
         stage('Init Parameters') {
             steps{                
                 script {
-                    tfstate_file = "key=03-VPC-${ENV_NAME}/terraform.tfstate"
+                    tfstate_file = "key=04-WebServer-${ENV_NAME}/terraform.tfstate"
                     switch(params.ENV_NAME) {
                         case "dev":                               
-                            tfvars_filename = "develop_vars.tfvars" 
+                            destinantion_vpc_id = data.terraform_remote_state.dev.vpc_id
+                            tfvars_filename = "develop_vars.tfvars"
                             break
                         case "prod":                               
-                            tfvars_filename = "prod_vars.tfvars"                               
+                            destinantion_vpc_id = data.terraform_remote_state.prod.vpc_id    
+                            tfvars_filename = "prod_vars.tfvars"                           
                             break
                         default:
-                            tfvars_filename = "no_file.txt"
-                            tfstate_file = "no_tfstate.txt"
+                            destinantion_vpc_id = "NO_ID_FOUND"   
+                            tfvars_filename = "no_tfvars.txt"
+                            tfstate_file = "no_tfstate.txt"                        
                             break
                     }
                 }
-                echo "Files: ${tfvars_filename} ${tfstate_file}"                
+                echo "VPC ID: ${destinantion_vpc_id}"                
             }
         }
 
@@ -49,15 +53,10 @@ pipeline {
         }
 
         stage('Terraform Init') {            
-            steps {
-                echo "file: ${tfvars_filename}  ${tfstate_file}"
-                
-                pwd()
-                dir('03-VPC'){
-                    sh "terraform init -no-color -var-file ${tfvars_filename} -backend-config='${tfstate_file}'"
-                    sh "ls -l"
-                }
-                sh "ls -l"
+            steps {               
+                dir('04-WebServer'){
+                    sh "terraform init -no-color -var-file ${tfvars_filename} -backend-config='${tfstate_file}'"                    
+                }                
                 echo "End Terraform Init"
             }
         }

@@ -2,6 +2,7 @@
 
 Demo example to build an AWS infraestructure for a company using Terraform.  
 We will deploy a Jenkins server from our local machine in the default VPC and then we will build a new VPC using Jenkins jobs.
+For this demo, we are using just one AWS account instead of separating environments in different accounts.
 
 Follow this steps to build CloudCo Cloud Infra.
 
@@ -21,4 +22,5 @@ Check Terraform and AWS Cli using demos jobs in "02-Jenkins\Jobs" folder. For th
         - Branch: */main
         - Repository: https://github.com/hyorch/CloudCo-TF_AWS
 
+4. Create WebServer on new VPC. Query VPC id from remote status before create EC2 instance.
     
