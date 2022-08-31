@@ -1,4 +1,4 @@
-resource "aws_security_group" "sg-WebServer" {
+resource "aws_security_group" "sg-webserver" {
   name = "sg-WebServer"
   ingress {
     from_port   = var.http_port
