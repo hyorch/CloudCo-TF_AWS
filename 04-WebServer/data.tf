@@ -11,21 +11,13 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"]
 }
 
-data "terraform_remote_state" "dev" {
+data "terraform_remote_state" "vpc_state" {
   backend = "s3"
   config = {
     bucket = "cloudco-demo-tf-state"
-    key    = "03-VPC-dev/terraform.tfstate"
+    key    = "03-VPC-${var.vpc_environment}/terraform.tfstate"
     region = "eu-west-1"
     dynamodb_table = "terraform-locks"
   }
 }
 
-data "terraform_remote_state" "prod" {
-  backend = "s3"
-  config = {
-    bucket = "cloudco-demo-tf-state"
-    key    = "03-VPC-dev/terraform.tfstate"
-    region = "eu-west-1"   
-  }
-}

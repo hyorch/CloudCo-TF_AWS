@@ -2,7 +2,11 @@ variable "region" {
   type        = string
   description = "Region of the VPC"
 }
- 
+
+variable "vpc_environment"{
+  description = "Environtment where running this Terraform"  
+}
+
 variable "server_name" {
   type = string
   default = "WebServer Name" 

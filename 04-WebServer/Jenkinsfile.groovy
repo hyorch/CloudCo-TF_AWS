@@ -1,4 +1,3 @@
-def destinantion_vpc_id = ""
 def tfstate_file = "nofile.txt"
 def tfvars_filename = "nofile.txt"
 
@@ -26,16 +25,13 @@ pipeline {
                 script {
                     tfstate_file = "key=04-WebServer-${ENV_NAME}/terraform.tfstate"
                     switch(params.ENV_NAME) {
-                        case "dev":                               
-                            destinantion_vpc_id = data.terraform_remote_state.dev.vpc_id
+                        case "dev":                                                           
                             tfvars_filename = "develop_vars.tfvars"
                             break
-                        case "prod":                               
-                            destinantion_vpc_id = data.terraform_remote_state.prod.vpc_id    
+                        case "prod":     
                             tfvars_filename = "prod_vars.tfvars"                           
                             break
-                        default:
-                            destinantion_vpc_id = "NO_ID_FOUND"   
+                        default:                              
                             tfvars_filename = "no_tfvars.txt"
                             tfstate_file = "no_tfstate.txt"                        
                             break

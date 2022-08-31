@@ -54,10 +54,8 @@ pipeline {
                 
                 pwd()
                 dir('03-VPC'){
-                    sh "terraform init -no-color -var-file ${tfvars_filename} -backend-config='${tfstate_file}'"
-                    sh "ls -l"
-                }
-                sh "ls -l"
+                    sh "terraform init -no-color -var-file ${tfvars_filename} -backend-config='${tfstate_file}'"                 
+                }                
                 echo "End Terraform Init"
             }
         }
