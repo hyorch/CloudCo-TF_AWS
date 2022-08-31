@@ -1,6 +1,6 @@
 resource "aws_security_group" "sg-webserver" {
   name = "WebServer-sg"
-  vpc_id = data.terraform_remote_state.vpc_state.vpc_id.outputs.value
+  vpc_id = data.terraform_remote_state.vpc_state.outputs.vpc_id
   ingress {
     from_port   = var.http_port
     to_port     = var.http_port
