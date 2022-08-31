@@ -37,7 +37,7 @@ pipeline {
                             break
                     }
                 }
-                echo "VPC ID: ${destinantion_vpc_id}"                
+                echo "Files: ${tfvars_filename} ${tfstate_file}"                
             }
         }
 
@@ -66,7 +66,7 @@ pipeline {
                 }
             }
             steps {
-                dir('03-VPC'){
+                dir('04-WebServer'){
                     sh "terraform plan -no-color -var-file ${tfvars_filename}"                    
                 }                
                 echo "**************End Terraform Plan******************************"
@@ -80,7 +80,7 @@ pipeline {
                 }
             }
             steps {
-                dir('03-VPC'){
+                dir('04-WebServer'){
                     sh "terraform plan -destroy -no-color -var-file ${tfvars_filename}"                    
                 }                
                 echo "**************End Terraform Plan Destroy******************************"
@@ -102,7 +102,7 @@ pipeline {
         stage('Terraform Apply') {
             when { anyOf{environment name: 'ACTION', value: 'apply';}}
             steps {
-                dir('03-VPC'){
+                dir('04-WebServer'){
                     sh "terraform apply -no-color -var-file ${tfvars_filename} --auto-approve"                    
                 }                
                 echo "**********************End Terraform Plan*********************"
@@ -111,7 +111,7 @@ pipeline {
         stage('Terraform Destroy') {
             when { anyOf{environment name: 'ACTION', value: 'destroy';}}
             steps {
-                dir('03-VPC'){
+                dir('04-WebServer'){
                     sh "terraform destroy -no-color -var-file ${tfvars_filename} --auto-approve"                    
                 }                
                 echo "*************End Terraform Destroy**************"
