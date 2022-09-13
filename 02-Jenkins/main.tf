@@ -1,6 +1,7 @@
 
 resource "aws_instance" "Jenkins" {
-  ami      = data.aws_ami.ubuntu.id # Latest Ubuntu 20.04
+  #ami      = data.aws_ami.ubuntu.id # Latest Ubuntu 20.04
+  ami = "ami-07702eb3b2ef420a9" # force AMI to avoid reinstalling
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.sg-jenkins.id]
   iam_instance_profile =  aws_iam_instance_profile.jenkins_ec2_profile.name

@@ -13,7 +13,7 @@ variable "server_name" {
 }
 
 variable "instance_type" {
-  description = "Jenkins instance size"
+  description = "Web instance size"
   default = "t2.micro"
 }
 
